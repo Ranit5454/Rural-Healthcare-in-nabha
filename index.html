@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medimate - Rural Healthcare Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <img src="medimate-logo.svg" alt="Medimate Logo" class="logo-image">
+                    </div>
+                    <h1>Medimate</h1>
+                </div>
+            </div>
+            <p>Advanced Rural Healthcare Platform for Punjab Region</p>
+            
+            <!-- User Authentication Section -->
+            <div class="auth-section" id="auth-section">
+                <div class="user-profile" id="user-profile" style="display: none;">
+                    <div class="user-avatar" id="user-avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="user-name">User</span>
+                        <span class="user-role" id="user-role">Patient</span>
+                    </div>
+                    <div class="user-actions">
+                        <button onclick="showUserMenu()" class="user-menu-btn">⚙️</button>
+                    </div>
+                </div>
+                
+                <div class="login-prompt" id="login-prompt">
+                    <a href="simple-login.html" class="login-btn">🔐 Login / Register</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('about')">🏠 Home</button>
+            <button class="tab-btn" onclick="showTab('location')">📍 Find Healthcare</button>
+            <button class="tab-btn" onclick="showTab('telemedicine')">📹 Telemedicine</button>
+            <button class="tab-btn" onclick="showSymptomChecker()">🤖 AI Health Assistant</button>
+            <button class="tab-btn" onclick="showTab('diseases')">🦠 Disease Alerts</button>
+            <button class="tab-btn" onclick="showTab('emergency')">🚨 Emergency</button>
+        </div>
+
+        <!-- HOME/ABOUT SECTION -->
+        <section id="about" class="content-section active">
+            <div class="section-header">
+                <h1>Welcome to Medimate Rural Healthcare Platform</h1>
+                <p>Connecting rural communities in Punjab with quality healthcare services</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🏥 Find Healthcare Facilities</h3>
+                    <p>Locate nearby hospitals, clinics, and pharmacies with real-time information including contact details and services offered.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>👩‍⚕️ Connect with Health Workers</h3>
+                    <p>Find qualified doctors, nurses, and community health workers in your area with their specializations and availability.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🦠 Disease Monitoring</h3>
+                    <p>Stay informed about seasonal diseases, health alerts, and preventive guidelines specific to Punjab region.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🚨 Emergency Services</h3>
+                    <p>Quick access to emergency services including ambulance, fire brigade, and police with response times.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🤖 AI Health Assistant</h3>
+                    <p>Advanced AI-powered symptom checker providing preliminary diagnosis and personalized health recommendations.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔍 Smart Search</h3>
+                    <p>Search across all healthcare providers by name, specialty, or location for quick and relevant results.</p>
+                </div>
+            </div>
+            
+            <!-- Why Choose Medimate Section -->
+            <div class="why-choose-section">
+                <div class="section-header">
+                    <h2>Why Choose Medimate?</h2>
+                    <p>Built specifically for rural communities with features that matter most to you.</p>
+                </div>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <div class="benefit-icon-circle">🎯</div>
+                        </div>
+                        <h3>Punjab-Focused</h3>
+                        <p>Tailored specifically for Punjab's rural healthcare needs and infrastructure.</p>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <div class="benefit-icon-circle">👩‍⚕️</div>
+                        </div>
+                        <h3>Expert Healthcare</h3>
+                        <p>Connect with qualified doctors, nurses, and health professionals across Punjab.</p>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <div class="benefit-icon-circle">⚡</div>
+                        </div>
+                        <h3>Fast Response</h3>
+                        <p>Quick access to emergency services with optimized response times.</p>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <div class="benefit-icon-circle">🔒</div>
+                        </div>
+                        <h3>Secure & Private</h3>
+                        <p>Your health data is protected with industry-standard security measures.</p>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <div class="benefit-icon-circle">📹</div>
+                        </div>
+                        <h3>Telemedicine Portal</h3>
+                        <p>Consult with certified doctors via video calls from home at affordable rates (₹50-100).</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Statistics Section -->
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3 class="stat-number">500+</h3>
+                        <p class="stat-label">Healthcare Facilities</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 class="stat-number">1000+</h3>
+                        <p class="stat-label">Registered Doctors</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 class="stat-number">50+</h3>
+                        <p class="stat-label">Districts Covered</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 class="stat-number">24/7</h3>
+                        <p class="stat-label">Emergency Support</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer Section -->
+            <div class="home-footer">
+                <div class="footer-content-grid">
+                    <div class="footer-section">
+                        <h4>Medimate</h4>
+                        <p>Revolutionizing rural healthcare access in Punjab through innovative technology and community-focused solutions.</p>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li>Services</li>
+                            <li>Emergency</li>
+                            <li>Features</li>
+                            <li>Contact</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Emergency Numbers</h4>
+                        <ul>
+                            <li>Ambulance: 108</li>
+                            <li>Fire: 101</li>
+                            <li>Police: 100</li>
+                            <li>Poison Helpline: 1066</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Contact Info</h4>
+                        <ul>
+                            <li>Punjab, India</li>
+                            <li>info@medimate.com</li>
+                            <li>+91-XXX-XXX-XXXX</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>© 2025 Medimate. All rights reserved. | Empowering Rural Healthcare in Punjab</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOCATION SERVICES SECTION -->
+        <section id="location" class="content-section">
+            <div class="section-header">
+                <h1>📍 Find Healthcare Services</h1>
+                <p>Locate nearby healthcare facilities and services in Punjab region</p>
+            </div>
+            
+            <!-- Connectivity Status -->
+            <div id="connectivity-status" class="status-bar"></div>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" id="facility-search" placeholder="Search hospitals, pharmacies, or health services..." />
+                <button onclick="searchNearbyFacilities()" class="search-btn">🔍 Search</button>
+            </div>
+            
+            <!-- Filter Options -->
+            <div class="filter-options">
+                <button onclick="findNearbyHospitals()" class="filter-btn hospitals">🏥 Hospitals</button>
+                <button onclick="findNearbyPharmacies()" class="filter-btn pharmacies">💊 Pharmacies</button>
+                <button onclick="findHealthWorkers()" class="filter-btn workers">👩‍⚕️ Health Workers</button>
+                <button onclick="showEmergencyServices()" class="filter-btn emergency">🚨 Emergency</button>
+            </div>
+            
+            <!-- Results Container -->
+            <div class="results-container">
+                <div id="hospitals-list" class="facilities-list"></div>
+                <div id="pharmacies-list" class="facilities-list"></div>
+                <div id="health-workers-list" class="facilities-list"></div>
+                <div id="emergency-services" class="facilities-list"></div>
+            </div>
+            
+        </section>
+
+        <!-- TELEMEDICINE SECTION -->
+        <section id="telemedicine" class="content-section">
+            <div class="section-header">
+                <h1>📹 Telemedicine Portal</h1>
+                <p>Connect with certified doctors through secure video consultations</p>
+            </div>
+            
+            <!-- Telemedicine Dashboard -->
+            <div class="telemedicine-dashboard">
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="action-card book-consultation" onclick="showBookingModal()">
+                        <div class="action-icon">📝</div>
+                        <h3>Book Consultation</h3>
+                        <p>Schedule video call with doctor</p>
+                    </button>
+                    
+                    <button class="action-card instant-consultation" onclick="findInstantDoctor()">
+                        <div class="action-icon">⚡</div>
+                        <h3>Instant Consultation</h3>
+                        <p>Connect with available doctor now</p>
+                    </button>
+                    
+                    <button class="action-card my-appointments" onclick="showMyAppointments()">
+                        <div class="action-icon">📅</div>
+                        <h3>My Appointments</h3>
+                        <p>View scheduled consultations</p>
+                    </button>
+                    
+                    <button class="action-card medical-history" onclick="showMedicalHistory()">
+                        <div class="action-icon">📊</div>
+                        <h3>Medical History</h3>
+                        <p>Access your health records</p>
+                    </button>
+                </div>
+                
+                <!-- Available Doctors -->
+                <div class="doctors-section">
+                    <div class="section-title">
+                        <h2>👩‍⚕️ Available Doctors</h2>
+                        <div class="filter-controls">
+                            <select id="specialty-filter" onchange="filterDoctors()">
+                                <option value="all">All Specialties</option>
+                                <option value="general">General Medicine</option>
+                                <option value="cardiology">Cardiology</option>
+                                <option value="pediatrics">Pediatrics</option>
+                                <option value="gynecology">Gynecology</option>
+                                <option value="dermatology">Dermatology</option>
+                            </select>
+                            <select id="availability-filter" onchange="filterDoctors()">
+                                <option value="all">All Doctors</option>
+                                <option value="online">Online Now</option>
+                                <option value="today">Available Today</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="doctors-grid" id="doctors-grid">
+                        <!-- Doctors will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Upcoming Appointments -->
+                <div class="appointments-section">
+                    <div class="section-title">
+                        <h2>🗺️ Upcoming Appointments</h2>
+                        <button class="view-all-btn" onclick="showAllAppointments()">View All</button>
+                    </div>
+                    
+                    <div class="appointments-list" id="appointments-list">
+                        <!-- Appointments will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Recent Consultations -->
+                <div class="consultations-section">
+                    <div class="section-title">
+                        <h2>💼 Recent Consultations</h2>
+                    </div>
+                    
+                    <div class="consultations-list" id="consultations-list">
+                        <!-- Recent consultations will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DISEASE ALERTS SECTION -->
+        <section id="diseases" class="content-section">
+            <div class="section-header">
+                <h1>🦠 Disease Monitoring & Alerts</h1>
+                <p>Stay informed about seasonal diseases and health risks in Punjab</p>
+            </div>
+            
+            <!-- Alert Subscription -->
+            <div class="alert-subscription">
+                <h3>🔔 Subscribe to Disease Alerts</h3>
+                <div class="subscription-options">
+                    <div class="alert-levels">
+                        <label>Alert Levels:</label>
+                        <input type="checkbox" id="critical-alerts" checked> Critical
+                        <input type="checkbox" id="high-alerts" checked> High
+                        <input type="checkbox" id="medium-alerts" checked> Medium
+                        <input type="checkbox" id="low-alerts"> Low
+                    </div>
+                    <div class="notification-methods">
+                        <label>Notify via:</label>
+                        <input type="checkbox" id="push-notifications" checked> Push Notifications
+                        <input type="checkbox" id="sms-notifications"> SMS
+                        <input type="checkbox" id="email-notifications"> Email
+                    </div>
+                    <button onclick="subscribeToAlerts()" class="subscribe-btn">🔔 Subscribe to Alerts</button>
+                </div>
+            </div>
+            
+            <!-- Active Alerts -->
+            <div class="active-alerts-section">
+                <h3>🚨 Active Disease Alerts</h3>
+                <div id="active-alerts" class="alerts-container">
+                    <!-- Active alerts will be populated here -->
+                </div>
+            </div>
+            
+            <!-- Current Seasonal Diseases -->
+            <div class="seasonal-section">
+                <h3>📅 Current Seasonal Health Information</h3>
+                <div id="seasonal-diseases" class="seasonal-container">
+                    <!-- Seasonal disease information will be populated here -->
+                </div>
+            </div>
+            
+            <!-- Preventive Guidelines -->
+            <div class="guidelines-section">
+                <h3>🛡️ Prevention Guidelines</h3>
+                <div class="guidelines-tabs">
+                    <button onclick="showGeneralGuidelines()" class="guideline-tab active">General</button>
+                    <button onclick="showSeasonalGuidelines()" class="guideline-tab">Seasonal</button>
+                    <button onclick="showGovernmentPrograms()" class="guideline-tab">Gov Programs</button>
+                </div>
+                <div id="prevention-guidelines" class="guidelines-content">
+                    <!-- Prevention guidelines will be populated here -->
+                </div>
+            </div>
+        </section>
+
+
+        <!-- EMERGENCY SECTION -->
+        <section id="emergency" class="content-section">
+            <div class="section-header">
+                <h1>🚨 Emergency Services</h1>
+                <p>Quick access to emergency healthcare services</p>
+            </div>
+            
+            <div class="emergency-grid">
+                <div class="emergency-card ambulance-card">
+                    <div class="emergency-header">
+                        <div class="emergency-icon">🚑</div>
+                        <h3>Ambulance Service</h3>
+                        <div class="emergency-number">108</div>
+                    </div>
+                    <div class="emergency-details">
+                        <p>Free 24x7 emergency ambulance service</p>
+                        <div class="emergency-stats">
+                            <span class="response-time">⏱️ Response: ~15 minutes</span>
+                            <span class="availability">🟢 Available Now</span>
+                        </div>
+                    </div>
+                    <div class="emergency-actions">
+                        <button class="emergency-call-btn" onclick="makeEmergencyCall('108', 'Ambulance')">
+                            <span class="call-icon">📞</span>
+                            <span class="call-text">CALL 108</span>
+                            <div class="call-pulse"></div>
+                        </button>
+                        <button class="emergency-location-btn" onclick="shareLocationForEmergency('108')">
+                            <span class="location-icon">📍</span>
+                            <span>Share Location</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="emergency-card fire-card">
+                    <div class="emergency-header">
+                        <div class="emergency-icon">🚒</div>
+                        <h3>Fire Brigade</h3>
+                        <div class="emergency-number">101</div>
+                    </div>
+                    <div class="emergency-details">
+                        <p>Fire emergency and rescue services</p>
+                        <div class="emergency-stats">
+                            <span class="response-time">⏱️ Response: ~10 minutes</span>
+                            <span class="availability">🟢 Available Now</span>
+                        </div>
+                    </div>
+                    <div class="emergency-actions">
+                        <button class="emergency-call-btn fire-btn" onclick="makeEmergencyCall('101', 'Fire Brigade')">
+                            <span class="call-icon">📞</span>
+                            <span class="call-text">CALL 101</span>
+                            <div class="call-pulse"></div>
+                        </button>
+                        <button class="emergency-location-btn" onclick="shareLocationForEmergency('101')">
+                            <span class="location-icon">📍</span>
+                            <span>Share Location</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="emergency-card police-card">
+                    <div class="emergency-header">
+                        <div class="emergency-icon">👮</div>
+                        <h3>Police Emergency</h3>
+                        <div class="emergency-number">100</div>
+                    </div>
+                    <div class="emergency-details">
+                        <p>Police emergency response service</p>
+                        <div class="emergency-stats">
+                            <span class="response-time">⏱️ Response: ~12 minutes</span>
+                            <span class="availability">🟢 Available Now</span>
+                        </div>
+                    </div>
+                    <div class="emergency-actions">
+                        <button class="emergency-call-btn police-btn" onclick="makeEmergencyCall('100', 'Police')">
+                            <span class="call-icon">📞</span>
+                            <span class="call-text">CALL 100</span>
+                            <div class="call-pulse"></div>
+                        </button>
+                        <button class="emergency-location-btn" onclick="shareLocationForEmergency('100')">
+                            <span class="location-icon">📍</span>
+                            <span>Share Location</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="emergency-card poison-card">
+                    <div class="emergency-header">
+                        <div class="emergency-icon">☠️</div>
+                        <h3>Poison Control</h3>
+                        <div class="emergency-number">1066</div>
+                    </div>
+                    <div class="emergency-details">
+                        <p>24x7 poison emergency helpline</p>
+                        <div class="emergency-stats">
+                            <span class="response-time">⏱️ Response: ~5 minutes</span>
+                            <span class="availability">🟢 Available Now</span>
+                        </div>
+                    </div>
+                    <div class="emergency-actions">
+                        <button class="emergency-call-btn poison-btn" onclick="makeEmergencyCall('1066', 'Poison Control')">
+                            <span class="call-icon">📞</span>
+                            <span class="call-text">CALL 1066</span>
+                            <div class="call-pulse"></div>
+                        </button>
+                        <button class="emergency-info-btn" onclick="showPoisonFirstAid()">
+                            <span class="info-icon">ℹ️</span>
+                            <span>First Aid Tips</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="emergency-info">
+                <h3>📱 How to Use Emergency Services</h3>
+                <ul>
+                    <li>Click on any emergency service card above to call directly</li>
+                    <li>Clearly state your location (use GPS coordinates if available)</li>
+                    <li>Describe the nature of the emergency calmly</li>
+                    <li>Follow the dispatcher's instructions</li>
+                    <li>Stay on the line until help arrives</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODALS -->
+    <div id="disease-modal" class="modal" style="display: none;">
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <!-- Disease details will be populated here -->
+        </div>
+    </div>
+
+    <div id="facility-modal" class="modal" style="display: none;">
+        <div class="modal-backdrop" onclick="closeFacilityModal()"></div>
+        <div class="modal-content">
+            <!-- Facility details will be populated here -->
+        </div>
+    </div>
+
+    <!-- Telemedicine Booking Modal -->
+    <div id="bookingModal" class="modal" style="display: none;">
+        <div class="modal-content booking-modal">
+            <div class="modal-header">
+                <h2>📅 Book Consultation</h2>
+                <span class="close-btn" onclick="closeBookingModal()">&times;</span>
+            </div>
+            
+            <div class="booking-form">
+                <div class="form-step" id="step1">
+                    <h3>Select Doctor</h3>
+                    <div class="doctor-selection" id="doctor-selection">
+                        <!-- Doctor options will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="form-step" id="step2" style="display: none;">
+                    <h3>Select Date & Time</h3>
+                    <div class="datetime-picker">
+                        <div class="date-picker">
+                            <label>Select Date:</label>
+                            <input type="date" id="consultation-date" min="" onchange="loadAvailableSlots()">
+                        </div>
+                        <div class="time-slots" id="time-slots">
+                            <!-- Available time slots will be populated -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-step" id="step3" style="display: none;">
+                    <h3>Consultation Details</h3>
+                    <div class="consultation-form">
+                        <div class="form-group">
+                            <label>Chief Complaint:</label>
+                            <textarea id="chief-complaint" placeholder="Briefly describe your main concern..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Consultation Type:</label>
+                            <select id="consultation-type">
+                                <option value="general">General Consultation</option>
+                                <option value="followup">Follow-up</option>
+                                <option value="prescription">Prescription Refill</option>
+                                <option value="emergency">Urgent Care</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Medical History (Optional):</label>
+                            <textarea id="medical-history" placeholder="Any relevant medical history..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="booking-navigation">
+                    <button id="prev-btn" onclick="prevStep()" style="display: none;">Previous</button>
+                    <button id="next-btn" onclick="nextStep()">Next</button>
+                    <button id="book-btn" onclick="confirmBooking()" style="display: none;">Book Consultation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Video Call Interface -->
+    <div id="videoCallModal" class="modal video-call-modal" style="display: none;">
+        <div class="modal-content video-call-content">
+            <div class="video-call-header">
+                <div class="call-info">
+                    <h3 id="doctor-name">Dr. Sarah Johnson</h3>
+                    <span class="call-status">Connected</span>
+                    <span class="call-timer" id="call-timer">00:00</span>
+                </div>
+                <button class="end-call-btn" onclick="endCall()">
+                    <i class="fas fa-phone-slash"></i>
+                </button>
+            </div>
+            
+            <div class="video-container">
+                <div class="doctor-video">
+                    <video id="doctor-video" autoplay></video>
+                    <div class="video-placeholder">
+                        <div class="doctor-avatar" id="video-doctor-avatar">DR</div>
+                        <p id="video-doctor-name">Dr. Sarah Johnson</p>
+                    </div>
+                </div>
+                
+                <div class="patient-video">
+                    <video id="patient-video" autoplay muted></video>
+                    <div class="video-placeholder">
+                        <div class="patient-avatar">YOU</div>
+                        <p>You</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="call-controls">
+                <button class="control-btn" id="mute-btn" onclick="toggleMute()">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <button class="control-btn" id="video-btn" onclick="toggleVideo()">
+                    <i class="fas fa-video"></i>
+                </button>
+                <button class="control-btn" id="screen-share-btn" onclick="toggleScreenShare()">
+                    <i class="fas fa-desktop"></i>
+                </button>
+                <button class="control-btn" id="chat-btn" onclick="toggleChat()">
+                    <i class="fas fa-comments"></i>
+                </button>
+            </div>
+            
+            <div class="chat-panel" id="chat-panel">
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Chat messages will be populated here -->
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="sendMessage(event)">
+                    <button onclick="sendChatMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Menu Modal -->
+    <div id="user-menu-modal" class="modal" style="display: none;">
+        <div class="modal-backdrop" onclick="closeUserMenu()"></div>
+        <div class="modal-content user-menu-content">
+            <div class="user-menu-header">
+                <div class="user-avatar-large" id="user-avatar-large">👤</div>
+                <div class="user-details">
+                    <h3 id="modal-user-name">User Name</h3>
+                    <p id="modal-user-email">user@example.com</p>
+                    <span class="user-role-badge" id="modal-user-role">Patient</span>
+                </div>
+            </div>
+            
+            <div class="user-menu-options">
+                <button class="menu-option" onclick="showProfile()">
+                    👤 My Profile
+                </button>
+                <button class="menu-option" onclick="showSettings()">
+                    ⚙️ Settings
+                </button>
+                <button class="menu-option" onclick="showNotifications()">
+                    🔔 Notifications
+                </button>
+                <button class="menu-option" onclick="showHelp()">
+                    ❓ Help & Support
+                </button>
+                <hr>
+                <button class="menu-option logout-option" onclick="logout()">
+                    🚪 Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="simple-auth.js"></script>
+    <script src="enhanced-backend-simulation.js"></script>
+    <script src="location-service.js"></script>
+    <script src="auth.js"></script>
+    <script src="backend-simulation.js"></script>
+    <script src="integration-examples.js"></script>
+    <script src="telemedicine.js"></script>
+    <script src="app.js"></script>
+    <script src="session-manager.js"></script>
+    <script>
+        // Initialize authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            if (window.isAuthenticated && window.isAuthenticated()) {
+                const user = window.getCurrentUser();
+                if (user) {
+                    // Show user profile
+                    document.getElementById('login-prompt').style.display = 'none';
+                    document.getElementById('user-profile').style.display = 'flex';
+                    
+                    // Update user info
+                    document.getElementById('user-name').textContent = user.firstName + ' ' + user.lastName;
+                    document.getElementById('user-role').textContent = user.role;
+                    document.getElementById('modal-user-name').textContent = user.firstName + ' ' + user.lastName;
+                    document.getElementById('modal-user-email').textContent = user.email;
+                    document.getElementById('modal-user-role').textContent = user.role;
+                    
+                    // Set avatar based on role
+                    const avatar = user.role === 'doctor' ? '👨‍⚕️' : user.role === 'nurse' ? '👩‍⚕️' : '👤';
+                    document.getElementById('user-avatar').textContent = avatar;
+                    document.getElementById('user-avatar-large').textContent = avatar;
+                } else {
+                    // User not logged in, redirect to login
+                    redirectToLogin();
+                }
+            } else {
+                // Authentication system not loaded, show login prompt
+                document.getElementById('login-prompt').style.display = 'block';
+                document.getElementById('user-profile').style.display = 'none';
+            }
+        });
+        
+        // Show user menu
+        function showUserMenu() {
+            document.getElementById('user-menu-modal').style.display = 'flex';
+        }
+        
+        // Close user menu
+        function closeUserMenu() {
+            document.getElementById('user-menu-modal').style.display = 'none';
+        }
+        
+        // Profile functions (placeholders)
+        function showProfile() {
+            alert('Profile management coming soon!');
+            closeUserMenu();
+        }
+        
+        function showSettings() {
+            alert('Settings panel coming soon!');
+            closeUserMenu();
+        }
+        
+        function showNotifications() {
+            alert('Notifications panel coming soon!');
+            closeUserMenu();
+        }
+        
+        function showHelp() {
+            alert('Help & Support coming soon!');
+            closeUserMenu();
+        }
+        
+        // Redirect to login if not authenticated and trying to access protected features
+        function redirectToLogin() {
+            if (confirm('You need to login to access this feature. Redirect to login page?')) {
+                window.location.href = 'simple-login.html';
+            }
+        }
+    </script>
+</body>
+</html>

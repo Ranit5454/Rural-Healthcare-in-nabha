@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medimate - Rural Healthcare Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background Particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <!-- Enhanced Header -->
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <div class="person-icon"></div>
+                    </div>
+                    <h1>MediMate</h1>
+                </div>
+            </div>
+            <p>Advanced Telemedicine Platform for Rural Healthcare Excellence</p>
+        </div>
+
+        <!-- Enhanced Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('home')">🏠 Home</button>
+            <button class="nav-tab" onclick="showSection('login')">🔐 Login</button>
+            <button class="nav-tab" onclick="showSection('dashboard')" id="dashboardTab" style="display: none;">📊 Dashboard</button>
+            <button class="nav-tab" onclick="showSection('profile')" id="profileTab" style="display: none;">👤 Profile</button>
+            <button class="nav-tab" onclick="showSection('symptoms')">🤖 AI Diagnosis</button>
+            <button class="nav-tab" onclick="showSection('consultation')">📹 Video Call</button>
+            <button class="nav-tab" onclick="showSection('records')" id="recordsTab" style="display: none;">📋 Records</button>
+            <button class="nav-tab" onclick="showSection('emergency')">🚨 Emergency</button>
+            <!-- NEW TABS FOR NEW SERVICES -->
+            <button class="nav-tab" onclick="showSection('location')">📍 Find Healthcare</button>
+            <button class="nav-tab" onclick="showSection('diseases')">🦠 Disease Alerts</button>
+            <button class="nav-tab" onclick="showSection('offline')">📡 Offline Mode</button>
+        </div>
+
+        <!-- Enhanced Home Section -->
+        <div class="content-section active" id="home">
+            <div class="welcome-section">
+                <h2>Welcome to the Future of Healthcare</h2>
+                <p>Revolutionary telemedicine platform bringing world-class healthcare to rural communities in Nabha and beyond. Experience the perfect blend of AI technology and human care.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>🤖 AI-Powered Diagnosis</h3>
+                        <p>Advanced machine learning algorithms provide instant preliminary medical guidance based on your symptoms with 95% accuracy</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>👨‍⚕️ Expert Consultations</h3>
+                        <p>Connect with board-certified doctors through crystal-clear HD video calls from the comfort of your home</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📊 Smart Health Records</h3>
+                        <p>Secure cloud-based digital storage of your complete medical history with AI-powered insights and trends</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>⚡ Emergency Response</h3>
+                        <p>Lightning-fast emergency services with GPS location sharing and instant ambulance dispatch</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Login Section -->
+        <div class="content-section" id="login">
+            <div class="login-form">
+                <h2>🚀 Join Medimate</h2>
+                <p style="color: #666; margin-bottom: 30px;">Your journey to better healthcare starts here</p>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">📧 Email Address:</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">📱 Phone Number:</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+91 XXXXXXXXXX">
+                    </div>
+                    <button type="submit" class="btn">✉️ Login with Email</button>
+                    <button type="button" class="btn" onclick="loginWithGoogle()">🔍 Continue with Google</button>
+                    <button type="button" class="btn" onclick="loginWithOTP()">📲 Get OTP</button>
+                </form>
+                <div id="loginMessage"></div>
+            </div>
+        </div>
+
+        <!-- Enhanced Dashboard Section -->
+        <div class="content-section" id="dashboard">
+            <h2 class="gradient-text">Your Health Command Center</h2>
+            <p class="subtitle">Welcome back! Your personalized healthcare dashboard is ready.</p>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-card health-scanner" onclick="showSection('symptoms')">
+                    <h3>🔬 AI Health Scanner</h3>
+                    <p>Get instant medical insights powered by advanced artificial intelligence</p>
+                </div>
+                <div class="dashboard-card doctor-connect" onclick="showSection('consultation')">
+                    <h3>👩‍⚕️ Doctor Connect</h3>
+                    <p>Book premium video consultations with certified medical professionals</p>
+                </div>
+                <div class="dashboard-card health-analytics" onclick="showSection('records')">
+                    <h3>📈 Health Analytics</h3>
+                    <p>Track your health journey with smart data visualization and trends</p>
+                </div>
+                <div class="dashboard-card rapid-response" onclick="showSection('emergency')">
+                    <h3>🚁 Rapid Response</h3>
+                    <p>24/7 emergency services with instant GPS-enabled ambulance dispatch</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Profile Section -->
+        <div class="content-section" id="profile">
+            <h2 class="gradient-text-success">Your Health Profile</h2>
+            <div class="profile-form">
+                <form id="profileForm">
+                    <div class="profile-grid">
+                        <div class="form-group">
+                            <label for="fullName">👤 Full Name:</label>
+                            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">🎂 Age:</label>
+                            <input type="number" id="age" name="age" min="1" max="120" placeholder="Your age" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">⚧ Gender:</label>
+                            <select id="gender" name="gender">
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bloodGroup">🩸 Blood Group:</label>
+                            <input type="text" id="bloodGroup" name="bloodGroup" placeholder="e.g., A+, B-, O+">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="medicalHistory">📋 Medical History:</label>
+                        <textarea id="medicalHistory" name="medicalHistory" class="symptom-input" placeholder="List any chronic conditions, past surgeries, medications, etc."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="allergies">⚠️ Known Allergies:</label>
+                        <textarea id="allergies" name="allergies" class="symptom-input" placeholder="List any known allergies to medicines, foods, environmental factors, etc."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">💾 Save Profile</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Enhanced Symptom Checker Section -->
+        <div class="content-section" id="symptoms">
+            <h2 class="gradient-text-success">🤖 AI Health Scanner</h2>
+            <p class="subtitle">Describe your symptoms below for instant preliminary medical guidance powered by advanced AI.</p>
+            
+            <div class="symptom-form">
+                <h3>Tell us about your symptoms:</h3>
+                <textarea id="symptomInput" class="symptom-input" placeholder="Describe your symptoms in detail... For example: 'I have been experiencing headache for 2 days, with mild fever and body ache. The pain is throbbing and gets worse in bright light.'"></textarea>
+                
+                <button onclick="analyzeSymptoms()" class="btn">🔍 Analyze Symptoms</button>
+                
+                <div id="symptomResult" class="symptom-result" style="display: none;">
+                    <h4>🩺 AI Preliminary Analysis:</h4>
+                    <p id="analysisText"></p>
+                    <div class="disclaimer">
+                        <p><strong>⚠️ Medical Disclaimer:</strong> This AI analysis is for informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider for proper medical evaluation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Video Consultation Section -->
+        <div class="content-section" id="consultation">
+            <h2 class="gradient-text">📹 Video Consultation Center</h2>
+            <p class="subtitle">Connect with qualified doctors through secure, high-quality video calls.</p>
+            
+            <div class="video-section">
+                <div class="video-placeholder">
+                    <div class="video-content">
+                        <h3>🎥 Premium Video Consultation</h3>
+                        <p>Crystal-clear HD video calls with certified medical professionals</p>
+                        <p><em>WebRTC technology ensures secure, encrypted communication</em></p>
+                    </div>
+                </div>
+                
+                <div class="consultation-buttons">
+                    <button class="btn" onclick="startConsultation()">🚀 Start Instant Consultation</button>
+                    <button class="btn" onclick="scheduleConsultation()">📅 Schedule Appointment</button>
+                </div>
+                
+                <div class="doctors-section">
+                    <h3>👨‍⚕️ Our Medical Experts</h3>
+                    <div class="records-list">
+                        <div class="record-item doctor-card">
+                            <div class="doctor-info">
+                                <strong>👨‍⚕️ Dr. Rajesh Kumar</strong> - General Medicine & Family Practice<br>
+                                <small>🎓 MBBS, MD | 15+ years experience</small><br>
+                                <small>📅 Available: Mon-Fri, 9 AM - 6 PM | 🟢 Online Now</small>
+                            </div>
+                            <button class="btn btn-small" onclick="bookDoctor('rajesh')">Book Consultation</button>
+                        </div>
+                        <div class="record-item doctor-card">
+                            <div class="doctor-info">
+                                <strong>👩‍⚕️ Dr. Priya Sharma</strong> - Pediatrics & Child Care<br>
+                                <small>🎓 MBBS, DCH | 12+ years experience</small><br>
+                                <small>📅 Available: Tue, Thu, Sat, 10 AM - 4 PM | 🔴 Busy</small>
+                            </div>
+                            <button class="btn btn-small" onclick="bookDoctor('priya')">Schedule Later</button>
+                        </div>
+                        <div class="record-item doctor-card">
+                            <div class="doctor-info">
+                                <strong>👨‍⚕️ Dr. Amit Singh</strong> - Emergency Medicine & Critical Care<br>
+                                <small>🎓 MBBS, MD Emergency Medicine | 10+ years experience</small><br>
+                                <small>📅 Available: 24/7 for emergencies | 🟢 On Call</small>
+                            </div>
+                            <button class="btn btn-small emergency" onclick="emergencyConsult('amit')">Emergency Consult</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Medical Records Section -->
+        <div class="content-section" id="records">
+            <h2 class="gradient-text-warning">📊 Your Digital Health Records</h2>
+            <p class="subtitle">Comprehensive digital health history with AI-powered insights and trends.</p>
+            
+            <div class="records-actions">
+                <button class="btn" onclick="addNewRecord()">➕ Add New Record</button>
+                <button class="btn" onclick="exportRecords()">📤 Export Records</button>
+                <button class="btn" onclick="shareRecords()">🔗 Share with Doctor</button>
+            </div>
+            
+            <div class="records-list">
+                <div class="record-item consultation-record">
+                    <div class="record-header">
+                        <strong>🩺 Video Consultation - General Health Check</strong>
+                        <span class="record-date">📅 August 15, 2025</span>
+                    </div>
+                    <div class="record-details">
+                        <p><strong>👨‍⚕️ Doctor:</strong> Dr. Rajesh Kumar | <strong>⏱️ Duration:</strong> 30 minutes</p>
+                        <p><strong>💊 Diagnosis:</strong> Mild hypertension, stress-related symptoms</p>
+                        <p><strong>🎯 Treatment:</strong> Lifestyle modifications, stress management techniques</p>
+                        <p><strong>📋 Follow-up:</strong> Scheduled for September 15, 2025</p>
+                    </div>
+                </div>
+
+                <div class="record-item lab-record">
+                    <div class="record-header">
+                        <strong>🧪 Laboratory Report - Comprehensive Health Panel</strong>
+                        <span class="record-date">📅 August 10, 2025</span>
+                    </div>
+                    <div class="record-details">
+                        <p><strong>🏥 Lab:</strong> PathLab Nabha | <strong>🔬 Tests:</strong> Complete Blood Count, Lipid Profile</p>
+                        <p><strong>📊 Results:</strong></p>
+                        <ul>
+                            <li>Hemoglobin: 12.8 g/dL (Normal: 12-16 g/dL) ✅</li>
+                            <li>Blood Sugar: 98 mg/dL (Normal: 70-100 mg/dL) ✅</li>
+                            <li>Cholesterol: 185 mg/dL (Normal: <200 mg/dL) ✅</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="record-item prescription-record">
+                    <div class="record-header">
+                        <strong>💊 Digital Prescription</strong>
+                        <span class="record-date">📅 August 5, 2025</span>
+                    </div>
+                    <div class="record-details">
+                        <p><strong>👩‍⚕️ Doctor:</strong> Dr. Priya Sharma | <strong>🏥 Clinic:</strong> Nabha Health Center</p>
+                        <p><strong>💊 Medications:</strong></p>
+                        <ul>
+                            <li>Paracetamol 500mg - Take 1 tablet every 8 hours (3 times daily)</li>
+                            <li>Vitamin D3 - Take 1 capsule daily after breakfast</li>
+                        </ul>
+                        <p><strong>⚠️ Instructions:</strong> Complete rest for 2 days, increase fluid intake</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Emergency Section -->
+        <div class="content-section" id="emergency">
+            <div class="emergency-section">
+                <h2 class="gradient-text-danger">🚨 Emergency Response Center</h2>
+                
+                <div class="emergency-info">
+                    <h3>⚡ Immediate Medical Emergency?</h3>
+                    <p>If you're experiencing a life-threatening emergency such as chest pain, difficulty breathing, severe bleeding, or loss of consciousness, please call emergency services immediately!</p>
+                </div>
+                
+                <div class="emergency-actions">
+                    <button class="btn btn-emergency" onclick="callEmergency()">
+                        🚨 CALL AMBULANCE NOW
+                    </button>
+                    <button class="btn" onclick="shareLocation()">
+                        📍 Share My Location
+                    </button>
+                </div>
+                
+                <div class="emergency-contacts">
+                    <h3>📞 Emergency Contacts - Nabha Region</h3>
+                    <div class="records-list">
+                        <div class="record-item emergency-contact">
+                            <div class="contact-info">
+                                <strong>🚑 National Ambulance Service</strong>
+                                <span class="contact-number">📞 108</span>
+                            </div>
+                            <p>24/7 Emergency Medical Services - Free nationwide service</p>
+                        </div>
+                        <div class="record-item emergency-contact">
+                            <div class="contact-info">
+                                <strong>🏥 Nabha Civil Hospital</strong>
+                                <span class="contact-number">📞 +91-1765-123456</span>
+                            </div>
+                            <p>Main government hospital with 24/7 emergency ward and trauma center</p>
+                        </div>
+                        <div class="record-item emergency-contact">
+                            <div class="contact-info">
+                                <strong>👮 Police Emergency</strong>
+                                <span class="contact-number">📞 100</span>
+                            </div>
+                            <p>For any emergency requiring immediate police assistance</p>
+                        </div>
+                        <div class="record-item emergency-contact">
+                            <div class="contact-info">
+                                <strong>🔥 Fire Department</strong>
+                                <span class="contact-number">📞 101</span>
+                            </div>
+                            <p>Fire emergency services and rescue operations</p>
+                        </div>
+                        <div class="record-item emergency-contact">
+                            <div class="contact-info">
+                                <strong>🏥 Rajindra Hospital, Patiala</strong>
+                                <span class="contact-number">📞 +91-175-2212345</span>
+                            </div>
+                            <p>Nearest major medical college hospital - 25km from Nabha</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="emergency-tips">
+                    <h3>🩺 Emergency First Aid Tips</h3>
+                    <div class="records-list">
+                        <div class="record-item tip-card">
+                            <strong>💔 Heart Attack Symptoms:</strong>
+                            <p>Chest pain, shortness of breath, nausea, sweating. Call 108 immediately and chew aspirin if available.</p>
+                        </div>
+                        <div class="record-item tip-card">
+                            <strong>🧠 Stroke Signs:</strong>
+                            <p>Face drooping, arm weakness, speech difficulty. Remember F.A.S.T - Face, Arms, Speech, Time to call emergency.</p>
+                        </div>
+                        <div class="record-item tip-card">
+                            <strong>🔥 Burns:</strong>
+                            <p>Cool the burn with cold water for 10-15 minutes. Do not use ice or butter. Seek immediate medical attention for severe burns.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOCATION-BASED SERVICES SECTION -->
+        <section id="location" class="content-section">
+            <div class="section-header">
+                <h1 class="gradient-text">🗺️ Healthcare Locator</h1>
+                <p class="subtitle">Find hospitals, pharmacies, and health workers near you</p>
+            </div>
+            
+            <!-- Connectivity Status -->
+            <div id="connectivity-status" class="status-bar"></div>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" id="facility-search" placeholder="Search hospitals, pharmacies, or health services..." />
+                <button onclick="searchNearbyFacilities()" class="search-btn">🔍 Search</button>
+            </div>
+            
+            <!-- Filter Options -->
+            <div class="filter-options">
+                <button onclick="findNearbyHospitals()" class="filter-btn hospitals">🏥 Hospitals</button>
+                <button onclick="findNearbyPharmacies()" class="filter-btn pharmacies">💊 Pharmacies</button>
+                <button onclick="findHealthWorkers()" class="filter-btn workers">👩‍⚕️ Health Workers</button>
+                <button onclick="showEmergencyServices()" class="filter-btn emergency">🚨 Emergency</button>
+            </div>
+            
+            <!-- Results Container -->
+            <div class="results-container">
+                <div id="hospitals-list" class="facilities-list"></div>
+                <div id="pharmacies-list" class="facilities-list"></div>
+                <div id="health-workers-list" class="facilities-list"></div>
+                <div id="emergency-services" class="facilities-list"></div>
+            </div>
+            
+            <!-- Map Container (optional) -->
+            <div id="map-container" style="height: 400px; margin-top: 20px; display: none;">
+                <div id="healthcare-map"></div>
+            </div>
+        </section>
+
+        <!-- SEASONAL DISEASE ALERTS SECTION -->
+        <section id="diseases" class="content-section">
+            <div class="section-header">
+                <h1 class="gradient-text-warning">🦠 Disease Monitoring & Alerts</h1>
+                <p class="subtitle">Stay informed about seasonal diseases and health risks in your area</p>
+            </div>
+            
+            <!-- Alert Subscription -->
+            <div class="alert-subscription">
+                <h3>🔔 Subscribe to Disease Alerts</h3>
+                <div class="subscription-options">
+                    <div class="alert-levels">
+                        <label>Alert Levels:</label>
+                        <input type="checkbox" id="critical-alerts" checked> Critical
+                        <input type="checkbox" id="high-alerts" checked> High
+                        <input type="checkbox" id="medium-alerts" checked> Medium
+                        <input type="checkbox" id="low-alerts"> Low
+                    </div>
+                    <div class="notification-methods">
+                        <label>Notify via:</label>
+                        <input type="checkbox" id="push-notifications" checked> Push Notifications
+                        <input type="checkbox" id="sms-notifications"> SMS
+                        <input type="checkbox" id="email-notifications"> Email
+                    </div>
+                    <button onclick="subscribeToAlerts()" class="subscribe-btn btn">🔔 Subscribe to Alerts</button>
+                </div>
+            </div>
+            
+            <!-- Active Alerts -->
+            <div class="active-alerts-section">
+                <h3>🚨 Active Disease Alerts</h3>
+                <div id="active-alerts" class="alerts-container">
+                    <!-- Active alerts will be populated here -->
+                </div>
+            </div>
+            
+            <!-- Current Seasonal Diseases -->
+            <div class="seasonal-section">
+                <h3>📅 Current Seasonal Health Information</h3>
+                <div id="seasonal-diseases" class="seasonal-container">
+                    <!-- Seasonal disease information will be populated here -->
+                </div>
+            </div>
+            
+            <!-- Preventive Guidelines -->
+            <div class="guidelines-section">
+                <h3>🛡️ Prevention Guidelines</h3>
+                <div class="guidelines-tabs">
+                    <button onclick="showGeneralGuidelines()" class="guideline-tab active btn">General</button>
+                    <button onclick="showSeasonalGuidelines()" class="guideline-tab btn">Seasonal</button>
+                    <button onclick="showGovernmentPrograms()" class="guideline-tab btn">Gov Programs</button>
+                </div>
+                <div id="prevention-guidelines" class="guidelines-content">
+                    <!-- Prevention guidelines will be populated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- OFFLINE MODE SECTION -->
+        <section id="offline" class="content-section">
+            <div class="section-header">
+                <h1 class="gradient-text-success">📡 Offline Mode</h1>
+                <p class="subtitle">Manage your healthcare data even without internet connectivity</p>
+            </div>
+            
+            <!-- Connection Status -->
+            <div class="connection-status">
+                <div id="connection-indicator" class="status-indicator">
+                    <span class="status-icon">📶</span>
+                    <span id="connection-text">Checking connection...</span>
+                </div>
+                <button onclick="checkConnectivity()" class="refresh-btn btn">🔄 Refresh Status</button>
+            </div>
+            
+            <!-- Offline Data Management -->
+            <div class="offline-data-section">
+                <h3>💾 Offline Data</h3>
+                <div class="offline-stats">
+                    <div class="stat-card">
+                        <h4>Queued for Sync</h4>
+                        <span id="queued-count">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Cached Data</h4>
+                        <span id="cached-count">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Storage Used</h4>
+                        <span id="storage-used">0 MB</span>
+                    </div>
+                </div>
+                
+                <div class="offline-actions">
+                    <button onclick="syncNow()" class="sync-btn btn">⬆️ Sync Now</button>
+                    <button onclick="clearOfflineData()" class="clear-btn btn">🗑️ Clear Offline Data</button>
+                    <button onclick="downloadForOffline()" class="download-btn btn">⬇️ Download for Offline</button>
+                </div>
+            </div>
+            
+            <!-- Sync Status -->
+            <div id="sync-status" class="sync-status-section">
+                <!-- Sync status updates will appear here -->
+            </div>
+        </section>
+
+        <!-- MODALS FOR DETAILED INFORMATION -->
+        <!-- Disease Information Modal -->
+        <div id="disease-modal" class="modal" style="display: none;">
+            <div class="modal-backdrop" onclick="closeModal()"></div>
+            <div class="modal-content">
+                <!-- Disease details will be populated here -->
+            </div>
+        </div>
+
+        <!-- Facility Details Modal -->
+        <div id="facility-modal" class="modal" style="display: none;">
+            <div class="modal-backdrop" onclick="closeFacilityModal()"></div>
+            <div class="modal-content">
+                <!-- Facility details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="backend.js"></script>
+    <script src="integration-examples.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+    
+    <!-- Connectivity Status -->
+    <div id="connectivity-status" class="status-bar"></div>
+    
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" id="facility-search" placeholder="Search hospitals, pharmacies, or health services..." />
+        <button onclick="searchNearbyFacilities()" class="search-btn">🔍 Search</button>
+    </div>
+    
+    <!-- Filter Options -->
+    <div class="filter-options">
+        <button onclick="findNearbyHospitals()" class="filter-btn hospitals">🏥 Hospitals</button>
+        <button onclick="findNearbyPharmacies()" class="filter-btn pharmacies">💊 Pharmacies</button>
+        <button onclick="findHealthWorkers()" class="filter-btn workers">👩‍⚕️ Health Workers</button>
+        <button onclick="showEmergencyServices()" class="filter-btn emergency">🚨 Emergency</button>
+    </div>
+    
+    <!-- Results Container -->
+    <div class="results-container">
+        <div id="hospitals-list" class="facilities-list"></div>
+        <div id="pharmacies-list" class="facilities-list"></div>
+        <div id="health-workers-list" class="facilities-list"></div>
+        <div id="emergency-services" class="facilities-list"></div>
+    </div>
+    
+    <!-- Map Container (optional - if you want to show map) -->
+    <div id="map-container" style="height: 400px; margin-top: 20px; display: none;">
+        <div id="healthcare-map"></div>
+    </div>
+</section>
+
+<!-- SEASONAL DISEASE ALERTS SECTION -->
+<section id="diseases" class="content-section">
+    <div class="section-header">
+        <h1>🦠 Disease Monitoring & Alerts</h1>
+        <p>Stay informed about seasonal diseases and health risks in your area</p>
+    </div>
+    
+    <!-- Alert Subscription -->
+    <div class="alert-subscription">
+        <h3>🔔 Subscribe to Disease Alerts</h3>
+        <div class="subscription-options">
+            <div class="alert-levels">
+                <label>Alert Levels:</label>
+                <input type="checkbox" id="critical-alerts" checked> Critical
+                <input type="checkbox" id="high-alerts" checked> High
+                <input type="checkbox" id="medium-alerts" checked> Medium
+                <input type="checkbox" id="low-alerts"> Low
+            </div>
+            <div class="notification-methods">
+                <label>Notify via:</label>
+                <input type="checkbox" id="push-notifications" checked> Push Notifications
+                <input type="checkbox" id="sms-notifications"> SMS
+                <input type="checkbox" id="email-notifications"> Email
+            </div>
+            <button onclick="subscribeToAlerts()" class="subscribe-btn">🔔 Subscribe to Alerts</button>
+        </div>
+    </div>
+    
+    <!-- Active Alerts -->
+    <div class="active-alerts-section">
+        <h3>🚨 Active Disease Alerts</h3>
+        <div id="active-alerts" class="alerts-container">
+            <!-- Active alerts will be populated here -->
+        </div>
+    </div>
+    
+    <!-- Current Seasonal Diseases -->
+    <div class="seasonal-section">
+        <h3>📅 Current Seasonal Health Information</h3>
+        <div id="seasonal-diseases" class="seasonal-container">
+            <!-- Seasonal disease information will be populated here -->
+        </div>
+    </div>
+    
+    <!-- Preventive Guidelines -->
+    <div class="guidelines-section">
+        <h3>🛡️ Prevention Guidelines</h3>
+        <div class="guidelines-tabs">
+            <button onclick="showGeneralGuidelines()" class="guideline-tab active">General</button>
+            <button onclick="showSeasonalGuidelines()" class="guideline-tab">Seasonal</button>
+            <button onclick="showGovernmentPrograms()" class="guideline-tab">Gov Programs</button>
+        </div>
+        <div id="prevention-guidelines" class="guidelines-content">
+            <!-- Prevention guidelines will be populated here -->
+        </div>
+    </div>
+</section>
+
+<!-- OFFLINE MODE SECTION -->
+<section id="offline" class="content-section">
+    <div class="section-header">
+        <h1>📡 Offline Mode</h1>
+        <p>Manage your healthcare data even without internet connectivity</p>
+    </div>
+    
+    <!-- Connection Status -->
+    <div class="connection-status">
+        <div id="connection-indicator" class="status-indicator">
+            <span class="status-icon">📶</span>
+            <span id="connection-text">Checking connection...</span>
+        </div>
+        <button onclick="checkConnectivity()" class="refresh-btn">🔄 Refresh Status</button>
+    </div>
+    
+    <!-- Offline Data Management -->
+    <div class="offline-data-section">
+        <h3>💾 Offline Data</h3>
+        <div class="offline-stats">
+            <div class="stat-card">
+                <h4>Queued for Sync</h4>
+                <span id="queued-count">0</span>
+            </div>
+            <div class="stat-card">
+                <h4>Cached Data</h4>
+                <span id="cached-count">0</span>
+            </div>
+            <div class="stat-card">
+                <h4>Storage Used</h4>
+                <span id="storage-used">0 MB</span>
+            </div>
+        </div>
+        
+        <div class="offline-actions">
+            <button onclick="syncNow()" class="sync-btn">⬆️ Sync Now</button>
+            <button onclick="clearOfflineData()" class="clear-btn">🗑️ Clear Offline Data</button>
+            <button onclick="downloadForOffline()" class="download-btn">⬇️ Download for Offline</button>
+        </div>
+    </div>
+    
+    <!-- Sync Status -->
+    <div id="sync-status" class="sync-status-section">
+        <!-- Sync status updates will appear here -->
+    </div>
+</section>
+
+<!-- MODALS FOR DETAILED INFORMATION -->
+
+<!-- Disease Information Modal -->
+<div id="disease-modal" class="modal" style="display: none;">
+    <div class="modal-backdrop" onclick="closeModal()"></div>
+    <div class="modal-content">
+        <!-- Disease details will be populated here -->
+    </div>
+</div>
+
+<!-- Facility Details Modal -->
+<div id="facility-modal" class="modal" style="display: none;">
+    <div class="modal-backdrop" onclick="closeFacilityModal()"></div>
+    <div class="modal-content">
+        <!-- Facility details will be populated here -->
+    </div>
+</div>
+
+<!-- 3. Add CSS classes for new UI elements (add to your style.css) -->
+<style>
+/* Location Services Styles */
+.search-container {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.search-container input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.search-btn {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s;
+}
+
+.search-btn:hover {
+    transform: translateY(-2px);
+}
+
+.filter-options {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 16px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}
+
+.facility-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.facility-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.facility-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.facility-header h3 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.facility-type, .distance {
+    background: #e3f2fd;
+    color: #1565c0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.emergency-tag {
+    background: #ffebee;
+    color: #c62828;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.delivery-tag {
+    background: #e8f5e8;
+    color: #2e7d32;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+    <!-- JavaScript Files -->
+    <script src="backend.js"></script>
+    <script src="backend-simulation.js"></script>
+    <script src="integration-examples.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
+
+
