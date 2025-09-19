@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Symptom Checker - Debug Version</title>
+    <style>
+        /* Debug Console */
+        .debug-console {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 200px;
+            background: #000;
+            color: #0f0;
+            font-family: monospace;
+            font-size: 12px;
+            padding: 10px;
+            overflow-y: auto;
+            z-index: 10000;
+            border: 2px solid #0f0;
+        }
+        
+        .debug-header {
+            color: #ff0;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="debug-console" class="debug-console">
+        <div class="debug-header">🔍 Debug Console</div>
+        <div id="debug-log">Initializing...</div>
+    </div>
+
+    <script>
+        // Debug logging function
+        function debugLog(message) {
+            const debugElement = document.getElementById('debug-log');
+            const timestamp = new Date().toLocaleTimeString();
+            debugElement.innerHTML += `<br>[${timestamp}] ${message}`;
+            debugElement.scrollTop = debugElement.scrollHeight;
+            console.log(`[DEBUG] ${message}`);
+        }
+
+        // Override console methods to capture debug info
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        console.log = function(...args) {
+            debugLog('LOG: ' + args.join(' '));
+            originalLog.apply(console, args);
+        };
+
+        console.error = function(...args) {
+            debugLog('ERROR: ' + args.join(' '));
+            originalError.apply(console, args);
+        };
+
+        console.warn = function(...args) {
+            debugLog('WARN: ' + args.join(' '));
+            originalWarn.apply(console, args);
+        };
+
+        debugLog('Debug mode enabled');
+
+        // Simple test - create minimal symptom checker
+        debugLog('Creating minimal symptom checker...');
+
+        document.addEventListener('DOMContentLoaded', function() {
+            debugLog('DOM loaded');
+
+            // Create main container
+            const container = document.createElement('div');
+            container.style.cssText = `
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            `;
+
+            container.innerHTML = `
+                <h1>🤖 AI Symptom Checker - Debug Version</h1>
+                
+                <div id="tabs" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button id="tab-symptoms" onclick="showTab('symptoms')" 
+                            style="padding: 10px 20px; background: #00c851; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        🩺 Symptoms
+                    </button>
+                    <button id="tab-history" onclick="showTab('history')" 
+                            style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        📋 History  
+                    </button>
+                    <button id="tab-analysis" onclick="showTab('analysis')" 
+                            style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        🤖 Analysis
+                    </button>
+                </div>
+
+                <div id="content-symptoms" class="tab-content">
+                    <h2>Step 1: Select Symptom Category</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                        <div class="category-card" data-category="respiratory" 
+                             onclick="selectCategory('respiratory')" 
+                             style="padding: 20px; background: #f8f9fa; border-radius: 10px; cursor: pointer; border: 2px solid transparent;">
+                            <div style="font-size: 30px; margin-bottom: 10px;">🫁</div>
+                            <h3>Respiratory System</h3>
+                            <p>Cough, shortness of breath, chest pain</p>
+                        </div>
+                        <div class="category-card" data-category="digestive" 
+                             onclick="selectCategory('digestive')" 
+                             style="padding: 20px; background: #f8f9fa; border-radius: 10px; cursor: pointer; border: 2px solid transparent;">
+                            <div style="font-size: 30px; margin-bottom: 10px;">🍽️</div>
+                            <h3>Digestive System</h3>
+                            <p>Stomach pain, nausea, diarrhea</p>
+                        </div>
+                        <div class="category-card" data-category="general" 
+                             onclick="selectCategory('general')" 
+                             style="padding: 20px; background: #f8f9fa; border-radius: 10px; cursor: pointer; border: 2px solid transparent;">
+                            <div style="font-size: 30px; margin-bottom: 10px;">🌡️</div>
+                            <h3>General Symptoms</h3>
+                            <p>Fever, fatigue, headache</p>
+                        </div>
+                    </div>
+                    
+                    <div id="symptoms-list" style="margin: 20px 0; display: none;">
+                        <h3>Select your symptoms:</h3>
+                        <div id="symptoms-grid"></div>
+                        <button onclick="analyzeSymptoms()" style="margin-top: 20px; padding: 12px 30px; background: #00c851; color: white; border: none; border-radius: 25px; cursor: pointer;">
+                            🤖 Analyze Symptoms
+                        </button>
+                    </div>
+                </div>
+
+                <div id="content-history" class="tab-content" style="display: none;">
+                    <h2>📋 Medical History</h2>
+                    <div id="history-info"></div>
+                </div>
+
+                <div id="content-analysis" class="tab-content" style="display: none;">
+                    <h2>🤖 AI Analysis Results</h2>
+                    <div id="analysis-results"></div>
+                </div>
+            `;
+
+            document.body.insertBefore(container, document.getElementById('debug-console'));
+            debugLog('Main container created');
+        });
+
+        // Simple symptom data
+        const symptomData = {
+            respiratory: [
+                { id: 'cough', name: 'Cough' },
+                { id: 'shortness-breath', name: 'Shortness of Breath' },
+                { id: 'chest-pain', name: 'Chest Pain' }
+            ],
+            digestive: [
+                { id: 'stomach-pain', name: 'Stomach Pain' },
+                { id: 'nausea', name: 'Nausea' },
+                { id: 'diarrhea', name: 'Diarrhea' }
+            ],
+            general: [
+                { id: 'fever', name: 'Fever' },
+                { id: 'fatigue', name: 'Fatigue' },
+                { id: 'headache', name: 'Headache' }
+            ]
+        };
+
+        let selectedSymptoms = [];
+        let currentCategory = null;
+
+        function showTab(tabName) {
+            debugLog(`Switching to tab: ${tabName}`);
+            
+            // Update tab buttons
+            document.querySelectorAll('#tabs button').forEach(btn => {
+                btn.style.background = '#6c757d';
+            });
+            document.getElementById(`tab-${tabName}`).style.background = '#00c851';
+            
+            // Show/hide content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.getElementById(`content-${tabName}`).style.display = 'block';
+            
+            if (tabName === 'history') {
+                showMedicalHistory();
+            } else if (tabName === 'analysis') {
+                showAnalysisResults();
+            }
+        }
+
+        function selectCategory(category) {
+            debugLog(`Selected category: ${category}`);
+            currentCategory = category;
+            
+            // Update visual selection
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.style.borderColor = 'transparent';
+                card.style.background = '#f8f9fa';
+            });
+            
+            const selectedCard = document.querySelector(`[data-category="${category}"]`);
+            selectedCard.style.borderColor = '#00c851';
+            selectedCard.style.background = '#e8f5e8';
+            
+            // Show symptoms for this category
+            const symptomsGrid = document.getElementById('symptoms-grid');
+            const symptoms = symptomData[category] || [];
+            
+            symptomsGrid.innerHTML = symptoms.map(symptom => `
+                <label style="display: flex; align-items: center; padding: 10px; margin: 5px 0; background: #f8f9fa; border-radius: 5px; cursor: pointer;">
+                    <input type="checkbox" value="${symptom.id}" onchange="toggleSymptom('${symptom.id}')" style="margin-right: 10px;">
+                    ${symptom.name}
+                </label>
+            `).join('');
+            
+            document.getElementById('symptoms-list').style.display = 'block';
+        }
+
+        function toggleSymptom(symptomId) {
+            debugLog(`Toggled symptom: ${symptomId}`);
+            if (selectedSymptoms.includes(symptomId)) {
+                selectedSymptoms = selectedSymptoms.filter(id => id !== symptomId);
+            } else {
+                selectedSymptoms.push(symptomId);
+            }
+            debugLog(`Selected symptoms: ${selectedSymptoms.join(', ')}`);
+        }
+
+        function analyzeSymptoms() {
+            debugLog(`Analyzing symptoms: ${selectedSymptoms.join(', ')}`);
+            
+            if (selectedSymptoms.length === 0) {
+                alert('Please select at least one symptom');
+                return;
+            }
+            
+            // Simple AI analysis simulation
+            const analysisResult = {
+                confidence: Math.floor(Math.random() * 40) + 60, // 60-100%
+                possibleConditions: [
+                    {
+                        condition: getConditionName(),
+                        probability: Math.floor(Math.random() * 30) + 70,
+                        description: 'Based on your symptoms, this condition matches your symptom pattern.',
+                        urgency: 'routine'
+                    }
+                ],
+                recommendations: [
+                    'Rest and stay hydrated',
+                    'Monitor your symptoms',
+                    'Consult a healthcare provider if symptoms worsen'
+                ]
+            };
+            
+            // Save results globally
+            window.lastAnalysis = analysisResult;
+            
+            // Show results
+            displayAnalysis(analysisResult);
+            
+            // Switch to analysis tab
+            showTab('analysis');
+        }
+
+        function getConditionName() {
+            const conditions = {
+                respiratory: ['Common Cold', 'Bronchitis', 'Respiratory Infection'],
+                digestive: ['Gastritis', 'Food Poisoning', 'Stomach Flu'],
+                general: ['Viral Infection', 'Flu', 'Common Cold']
+            };
+            
+            const categoryConditions = conditions[currentCategory] || conditions.general;
+            return categoryConditions[Math.floor(Math.random() * categoryConditions.length)];
+        }
+
+        function displayAnalysis(result) {
+            debugLog('Displaying analysis results');
+            
+            const analysisDiv = document.getElementById('analysis-results');
+            analysisDiv.innerHTML = `
+                <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3>🎯 Analysis Confidence: ${result.confidence}%</h3>
+                </div>
+                
+                <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #00c851; margin-bottom: 20px;">
+                    <h3>${result.possibleConditions[0].condition}</h3>
+                    <div style="background: #e8f5e8; display: inline-block; padding: 5px 15px; border-radius: 15px; font-size: 12px; margin-bottom: 10px;">
+                        ${result.possibleConditions[0].probability}% Match
+                    </div>
+                    <p>${result.possibleConditions[0].description}</p>
+                </div>
+                
+                <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; border-left: 4px solid #2196f3;">
+                    <h4>📋 Recommendations</h4>
+                    <ul>
+                        ${result.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+
+        function showMedicalHistory() {
+            debugLog('Showing medical history');
+            
+            const token = localStorage.getItem('medimate_token');
+            const user = JSON.parse(localStorage.getItem('medimate_user') || 'null');
+            
+            const historyDiv = document.getElementById('history-info');
+            
+            if (token && user) {
+                historyDiv.innerHTML = `
+                    <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3>👤 User Profile</h3>
+                        <p><strong>Name:</strong> ${user.firstName} ${user.lastName}</p>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>Role:</strong> ${user.role}</p>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                        <h3>📋 Previous Assessments</h3>
+                        <p>Your symptom assessments will appear here.</p>
+                        ${window.lastAnalysis ? `
+                            <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #00c851; margin-top: 10px;">
+                                <strong>Latest Assessment:</strong> ${window.lastAnalysis.possibleConditions[0].condition}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            } else {
+                historyDiv.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <p>Login to view your medical history and previous assessments.</p>
+                        <a href="login.html" style="display: inline-block; padding: 12px 30px; background: #00c851; color: white; text-decoration: none; border-radius: 25px; margin-top: 15px;">
+                            🔐 Login to Access History
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        function showAnalysisResults() {
+            debugLog('Showing analysis results tab');
+            
+            const analysisDiv = document.getElementById('analysis-results');
+            
+            if (window.lastAnalysis) {
+                displayAnalysis(window.lastAnalysis);
+            } else {
+                analysisDiv.innerHTML = `
+                    <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 15px;">
+                        <div style="font-size: 60px; margin-bottom: 20px;">🤖</div>
+                        <h3>Complete Symptom Assessment</h3>
+                        <p>Please complete the symptom assessment to receive your AI health analysis.</p>
+                        <button onclick="showTab('symptoms')" style="padding: 12px 30px; background: #00c851; color: white; border: none; border-radius: 25px; cursor: pointer; margin-top: 15px;">
+                            Start Assessment
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize on load
+        debugLog('Debug symptom checker loaded');
+    </script>
+</body>
+</html>

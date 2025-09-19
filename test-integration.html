@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medimate Integration Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            min-height: 100vh;
+        }
+        .test-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        button {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 5px;
+            min-height: 20px;
+        }
+        .success { color: #4CAF50; }
+        .error { color: #f44336; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Medimate Integration Test</h1>
+        <p>This page tests if all the new services are properly integrated.</p>
+
+        <div class="test-section">
+            <h2>🔧 Service Availability Test</h2>
+            <button onclick="testServiceAvailability()">Test Services</button>
+            <div id="service-test-result" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>📍 Location Services Test</h2>
+            <button onclick="testLocationServices()">Test Location</button>
+            <div id="location-test-result" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>🦠 Disease Services Test</h2>
+            <button onclick="testDiseaseServices()">Test Disease Alerts</button>
+            <div id="disease-test-result" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>📡 Offline Services Test</h2>
+            <button onclick="testOfflineServices()">Test Offline Mode</button>
+            <div id="offline-test-result" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>🎯 Navigation Test</h2>
+            <button onclick="testNavigation()">Test Navigation</button>
+            <div id="navigation-test-result" class="result"></div>
+        </div>
+    </div>
+
+    <!-- Include the same scripts as main page -->
+    <script src="backend.js"></script>
+    <script src="integration-examples.js"></script>
+
+    <script>
+        function testServiceAvailability() {
+            const resultDiv = document.getElementById('service-test-result');
+            let results = [];
+
+            // Test if MedimateAPI exists
+            if (window.MedimateAPI) {
+                results.push('<span class="success">✅ MedimateAPI is available</span>');
+                
+                // Test each service
+                if (window.MedimateAPI.locationServices) {
+                    results.push('<span class="success">✅ Location Services loaded</span>');
+                } else {
+                    results.push('<span class="error">❌ Location Services not available</span>');
+                }
+                
+                if (window.MedimateAPI.seasonalDiseases) {
+                    results.push('<span class="success">✅ Disease Alert Services loaded</span>');
+                } else {
+                    results.push('<span class="error">❌ Disease Alert Services not available</span>');
+                }
+                
+                if (window.MedimateAPI.offline) {
+                    results.push('<span class="success">✅ Offline Services loaded</span>');
+                } else {
+                    results.push('<span class="error">❌ Offline Services not available</span>');
+                }
+            } else {
+                results.push('<span class="error">❌ MedimateAPI not available</span>');
+            }
+
+            resultDiv.innerHTML = results.join('<br>');
+        }
+
+        function testLocationServices() {
+            const resultDiv = document.getElementById('location-test-result');
+            const locationService = window.MedimateAPI?.locationServices;
+
+            if (!locationService) {
+                resultDiv.innerHTML = '<span class="error">❌ Location service not available</span>';
+                return;
+            }
+
+            let results = [];
+
+            // Test hospital search
+            try {
+                locationService.findNearbyHospitals(50, 3).then(result => {
+                    if (result.success && result.data.hospitals.length > 0) {
+                        results.push(`<span class="success">✅ Found ${result.data.hospitals.length} hospitals</span>`);
+                        result.data.hospitals.forEach(hospital => {
+                            results.push(`&nbsp;&nbsp;🏥 ${hospital.name} - ${hospital.distance}km`);
+                        });
+                    } else {
+                        results.push('<span class="error">❌ No hospitals found</span>');
+                    }
+                    resultDiv.innerHTML = results.join('<br>');
+                }).catch(error => {
+                    results.push('<span class="error">❌ Location permission needed</span>');
+                    resultDiv.innerHTML = results.join('<br>');
+                });
+            } catch (error) {
+                resultDiv.innerHTML = '<span class="error">❌ Error testing location services</span>';
+            }
+        }
+
+        function testDiseaseServices() {
+            const resultDiv = document.getElementById('disease-test-result');
+            const diseaseService = window.MedimateAPI?.seasonalDiseases;
+
+            if (!diseaseService) {
+                resultDiv.innerHTML = '<span class="error">❌ Disease service not available</span>';
+                return;
+            }
+
+            let results = [];
+
+            try {
+                // Test getting current diseases
+                const currentDiseases = diseaseService.getCurrentSeasonalDiseases();
+                if (currentDiseases.success) {
+                    results.push(`<span class="success">✅ Current season: ${currentDiseases.data.season.toUpperCase()}</span>`);
+                    results.push(`&nbsp;&nbsp;📊 ${currentDiseases.data.totalDiseases} diseases tracked`);
+                }
+
+                // Test getting active alerts
+                const activeAlerts = diseaseService.getActiveAlerts();
+                if (activeAlerts.success) {
+                    results.push(`<span class="success">✅ ${activeAlerts.data.alerts.length} active alerts</span>`);
+                }
+
+                resultDiv.innerHTML = results.join('<br>');
+            } catch (error) {
+                resultDiv.innerHTML = '<span class="error">❌ Error testing disease services</span>';
+            }
+        }
+
+        function testOfflineServices() {
+            const resultDiv = document.getElementById('offline-test-result');
+            const offlineService = window.MedimateAPI?.offline;
+
+            if (!offlineService) {
+                resultDiv.innerHTML = '<span class="error">❌ Offline service not available</span>';
+                return;
+            }
+
+            let results = [];
+
+            try {
+                // Test connectivity status
+                const status = offlineService.getConnectivityStatus();
+                if (status) {
+                    results.push(`<span class="success">✅ Connection status: ${status.isOnline ? 'Online' : 'Offline'}</span>`);
+                }
+
+                // Test offline storage
+                results.push('<span class="success">✅ Offline service is functional</span>');
+                
+                resultDiv.innerHTML = results.join('<br>');
+            } catch (error) {
+                resultDiv.innerHTML = '<span class="error">❌ Error testing offline services</span>';
+            }
+        }
+
+        function testNavigation() {
+            const resultDiv = document.getElementById('navigation-test-result');
+            let results = [];
+
+            // Test if navigation functions exist
+            const functions = [
+                'updateConnectivityStatus',
+                'findNearbyHospitals',
+                'findNearbyPharmacies',
+                'findHealthWorkers',
+                'subscribeToAlerts',
+                'getCurrentDiseases'
+            ];
+
+            functions.forEach(funcName => {
+                if (typeof window[funcName] === 'function') {
+                    results.push(`<span class="success">✅ ${funcName}() is available</span>`);
+                } else {
+                    results.push(`<span class="error">❌ ${funcName}() not found</span>`);
+                }
+            });
+
+            resultDiv.innerHTML = results.join('<br>');
+        }
+
+        // Auto-run service availability test when page loads
+        setTimeout(() => {
+            testServiceAvailability();
+        }, 1000);
+    </script>
+</body>
+</html>

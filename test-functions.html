@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medimate Function Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+        .test-button { margin: 5px; padding: 10px 15px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .test-button:hover { background: #45a049; }
+        #results { margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Medimate Function Test Page</h1>
+    <p>This page tests all the core functions of the Medimate platform.</p>
+
+    <div class="test-section">
+        <h3>🏥 Location Services Test</h3>
+        <button class="test-button" onclick="testFindHospitals()">Test Find Hospitals</button>
+        <button class="test-button" onclick="testFindPharmacies()">Test Find Pharmacies</button>
+        <button class="test-button" onclick="testFindHealthWorkers()">Test Find Health Workers</button>
+        <button class="test-button" onclick="testEmergencyServices()">Test Emergency Services</button>
+    </div>
+
+    <div class="test-section">
+        <h3>🔍 Search Test</h3>
+        <input type="text" id="test-search" placeholder="Enter search term (e.g., 'Nabha', 'cardiology')" style="padding: 8px; margin-right: 10px;">
+        <button class="test-button" onclick="testSearch()">Test Search</button>
+    </div>
+
+    <div class="test-section">
+        <h3>🦠 Disease Alerts Test</h3>
+        <button class="test-button" onclick="testActiveAlerts()">Test Active Alerts</button>
+        <button class="test-button" onclick="testSeasonalDiseases()">Test Seasonal Diseases</button>
+        <button class="test-button" onclick="testGuidelines()">Test Guidelines</button>
+        <button class="test-button" onclick="testSubscribeAlerts()">Test Subscribe</button>
+    </div>
+
+    <div class="test-section">
+        <h3>📡 Connectivity Test</h3>
+        <button class="test-button" onclick="testConnectivity()">Test Connectivity Status</button>
+        <button class="test-button" onclick="testOfflineSync()">Test Offline Sync</button>
+    </div>
+
+    <div id="results">
+        <h3>📊 Test Results</h3>
+        <div id="test-output">Click any test button to see results...</div>
+    </div>
+
+    <!-- Include the same scripts as main site -->
+    <script src="backend-simulation.js"></script>
+    <script src="integration-examples.js"></script>
+    <script src="app.js"></script>
+
+    <script>
+        function addResult(test, result) {
+            const output = document.getElementById('test-output');
+            const timestamp = new Date().toLocaleTimeString();
+            output.innerHTML += `<div><strong>[${timestamp}] ${test}:</strong> ${JSON.stringify(result, null, 2)}</div><br>`;
+        }
+
+        async function testFindHospitals() {
+            try {
+                const result = await window.MedimateAPI.findNearbyHospitals(50, 10);
+                addResult('Find Hospitals', result);
+                console.log('Hospital test result:', result);
+            } catch (error) {
+                addResult('Find Hospitals ERROR', error.message);
+            }
+        }
+
+        async function testFindPharmacies() {
+            try {
+                const result = await window.MedimateAPI.findNearbyPharmacies(25, 10);
+                addResult('Find Pharmacies', result);
+            } catch (error) {
+                addResult('Find Pharmacies ERROR', error.message);
+            }
+        }
+
+        async function testFindHealthWorkers() {
+            try {
+                const result = await window.MedimateAPI.findNearbyHealthWorkers(30, 5);
+                addResult('Find Health Workers', result);
+            } catch (error) {
+                addResult('Find Health Workers ERROR', error.message);
+            }
+        }
+
+        async function testEmergencyServices() {
+            try {
+                const result = await window.MedimateAPI.getEmergencyServices();
+                addResult('Emergency Services', result);
+            } catch (error) {
+                addResult('Emergency Services ERROR', error.message);
+            }
+        }
+
+        async function testSearch() {
+            const query = document.getElementById('test-search').value || 'Nabha';
+            try {
+                const result = await window.MedimateAPI.searchHealthcareFacilities(query, 'all');
+                addResult(`Search "${query}"`, result);
+            } catch (error) {
+                addResult(`Search "${query}" ERROR`, error.message);
+            }
+        }
+
+        async function testActiveAlerts() {
+            try {
+                const result = await window.MedimateAPI.getActiveAlerts();
+                addResult('Active Alerts', result);
+            } catch (error) {
+                addResult('Active Alerts ERROR', error.message);
+            }
+        }
+
+        async function testSeasonalDiseases() {
+            try {
+                const result = await window.MedimateAPI.getCurrentSeasonalDiseases();
+                addResult('Seasonal Diseases', result);
+            } catch (error) {
+                addResult('Seasonal Diseases ERROR', error.message);
+            }
+        }
+
+        async function testGuidelines() {
+            try {
+                const result = await window.MedimateAPI.getPreventiveGuidelines('general');
+                addResult('Prevention Guidelines', result);
+            } catch (error) {
+                addResult('Prevention Guidelines ERROR', error.message);
+            }
+        }
+
+        async function testSubscribeAlerts() {
+            try {
+                const preferences = { criticalAlerts: true, highAlerts: true };
+                const result = await window.MedimateAPI.subscribeToAlerts(preferences);
+                addResult('Subscribe to Alerts', result);
+            } catch (error) {
+                addResult('Subscribe to Alerts ERROR', error.message);
+            }
+        }
+
+        function testConnectivity() {
+            try {
+                const isOnline = window.MedimateAPI.isOnline();
+                addResult('Connectivity Status', { online: isOnline, navigator_online: navigator.onLine });
+            } catch (error) {
+                addResult('Connectivity Status ERROR', error.message);
+            }
+        }
+
+        async function testOfflineSync() {
+            try {
+                const result = await window.MedimateAPI.syncOfflineData();
+                addResult('Offline Sync', result);
+            } catch (error) {
+                addResult('Offline Sync ERROR', error.message);
+            }
+        }
+
+        // Auto-test when page loads
+        setTimeout(() => {
+            if (window.MedimateAPI) {
+                addResult('API Initialization', 'SUCCESS - MedimateAPI is available');
+                addResult('Data Available', {
+                    hospitals: window.MedimateAPI.hospitals ? window.MedimateAPI.hospitals.length : 'N/A',
+                    pharmacies: window.MedimateAPI.pharmacies ? window.MedimateAPI.pharmacies.length : 'N/A',
+                    healthWorkers: window.MedimateAPI.healthWorkers ? window.MedimateAPI.healthWorkers.length : 'N/A',
+                    diseaseAlerts: window.MedimateAPI.diseaseAlerts ? window.MedimateAPI.diseaseAlerts.length : 'N/A'
+                });
+            } else {
+                addResult('API Initialization', 'FAILED - MedimateAPI not available');
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
